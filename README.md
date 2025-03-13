@@ -2,7 +2,7 @@
 ![](https://i.imgur.com/m4W3oMo.gif)
 ## Detalhes
 
-O computador irá escolher de forma aleatória uma palavra, e cabe ao usuario chutar, letra por letra, até acertar, caos ele erre mais de 5 vezes, ele perde o jogo
+O computador irá escolher de forma aleatória uma palavra, e cabe ao usuario chutar, letra por letra, até acertar, caso ele erre mais de 5 vezes, ele perde o jogo
 
 ## Entrada 
 
