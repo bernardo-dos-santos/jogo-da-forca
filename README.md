@@ -1,5 +1,5 @@
 # Jogo da Forca 
-
+![](https://i.imgur.com/m4W3oMo.gif)
 ## Detalhes
 
 O computador irá escolher de forma aleatória uma palavra, e cabe ao usuario chutar, letra por letra, até acertar, caos ele erre mais de 5 vezes, ele perde o jogo
@@ -20,4 +20,22 @@ Os usuários são solicitados para digitar uma letra no console, caso essa letra e
 ## Como Utilizar 
 
 1. Clone o Repositório
-´´´
+```
+git clone https://github.com/bernardo-dos-santos/jogo-da-forca.git
+```
+2. Navegue até a pasta paiz da solução
+```
+cd jogo-da-forca
+```
+3. Restaure as dependências
+```
+dotnet restore
+```
+4. Navegue até a pasta do projeto
+```
+cd JogoDaForca.ConsoleApp
+```
+5. Execute o projeto
+```
+dotnet run
+```
