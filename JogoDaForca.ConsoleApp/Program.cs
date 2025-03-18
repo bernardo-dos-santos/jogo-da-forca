@@ -1,4 +1,5 @@
 ﻿using System.Formats.Asn1;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace JogoDaForca.ConsoleApp
 {
@@ -11,52 +12,23 @@ namespace JogoDaForca.ConsoleApp
             string palavraEscolhida = CriarPalavra(palavras);
 
             char[] letrasEncontradas = OcultarPalavra(palavraEscolhida);
-            
-
             int erros = 0;
             bool jogadorEnforcou = false;
-            bool jogadorAcertou = false;
+            bool jogadorGanhou = false;
             do
             {
                 MenuPrincipal(erros, letrasEncontradas);
+                erros = ErrouOuNao(palavraEscolhida, letrasEncontradas, erros);
                 
-
-                bool letraFoiEncontrada = false;
-                Console.WriteLine("Digite uma letra: ");
-                char chute = Console.ReadLine()!.ToUpper()[0];
-
-                for (int contador = 0; contador < palavraEscolhida.Length; contador++)
-                {
-                    char letraAtual = palavraEscolhida[contador];
-                    if (letraAtual == chute)
-                    {
-                        letrasEncontradas[contador] = letraAtual;
-                        letraFoiEncontrada = true;
-                    }
-
-                }
-                if (letraFoiEncontrada == false)
-                {
-                    erros++;
-                }
                 string palavraEncontrada = string.Join("", letrasEncontradas);
-                jogadorAcertou = palavraEncontrada == palavraEscolhida;
+                // Condições do loop
+                // _________________________________________
+                jogadorGanhou = palavraEncontrada == palavraEscolhida;
                 jogadorEnforcou = erros > 5;
-                if (jogadorAcertou)
-                {
-                    Console.WriteLine("----------------------------------------------");
-                    Console.WriteLine($"Parabéns, Você ganhou o jogo !! Você Acertou a palavra {palavraEscolhida}");
-                    Console.WriteLine("----------------------------------------------");
-                } else if(jogadorEnforcou)
-                {
-                    Console.WriteLine("----------------------------------------------");
-                    Console.WriteLine("Que azar. Você não conseguiu acertar a palavra");
-                    Console.WriteLine($"A palavra era {palavraEscolhida}");
-                    Console.WriteLine("----------------------------------------------");
-                }
-                Console.ReadLine();
+                // _________________________________________
+                GanhouOuNao(jogadorGanhou, jogadorEnforcou, palavraEscolhida);
 
-            } while (jogadorAcertou == false && jogadorEnforcou == false);
+            } while (jogadorGanhou == false && jogadorEnforcou == false);
         }
 
         static string[] ArmazenamentoDePalavras()
@@ -140,9 +112,48 @@ namespace JogoDaForca.ConsoleApp
             Console.WriteLine("----------------------------------------------");
             Console.WriteLine("Erros do jogador: " + erros);
             Console.WriteLine("----------------------------------------------");
-            Console.WriteLine("Palavra escolhida: " + String.Join("", letrasEncontradas));
+            Console.WriteLine("Palavra escolhida: " + System.String.Join("", letrasEncontradas));
             Console.WriteLine("----------------------------------------------");
         }
-        
+
+        static int ErrouOuNao(string palavraEscolhida, char[] letrasEncontradas, int erros)
+        {
+            bool letraFoiEncontrada = false;
+            Console.WriteLine("Digite uma letra: ");
+            char chute = Console.ReadLine()!.ToUpper()[0];
+
+            for (int contador = 0; contador < palavraEscolhida.Length; contador++)
+            {
+                char letraAtual = palavraEscolhida[contador];
+                if (letraAtual == chute)
+                {
+                    letrasEncontradas[contador] = letraAtual;
+                    letraFoiEncontrada = true;
+                }
+
+            }
+            if (letraFoiEncontrada == false)
+            {
+                erros++;
+            }
+            return erros;
+        }
+        static void GanhouOuNao(bool jogadorGanhou, bool jogadorEnforcou, string palavraEscolhida)
+        {
+            if (jogadorGanhou)
+            {
+                Console.WriteLine("----------------------------------------------");
+                Console.WriteLine($"Parabéns, Você ganhou o jogo !! Você Acertou a palavra {palavraEscolhida}");
+                Console.WriteLine("----------------------------------------------");
+            }
+            else if (jogadorEnforcou)
+            {
+                Console.WriteLine("----------------------------------------------");
+                Console.WriteLine("Que azar. Você não conseguiu acertar a palavra");
+                Console.WriteLine($"A palavra era {palavraEscolhida}");
+                Console.WriteLine("----------------------------------------------");
+            }
+            Console.ReadLine();
+        }
     }
 }
