@@ -19,8 +19,8 @@ namespace JogoDaForca.ConsoleApp
             {
                 MenuPrincipal(erros, letrasEncontradas);
                 erros = ErrouOuNao(palavraEscolhida, letrasEncontradas, erros);
-                
-                string palavraEncontrada = string.Join("", letrasEncontradas);
+
+                string palavraEncontrada = PalavraFoiEncontrada(letrasEncontradas);
                 // Condições do loop
                 // _________________________________________
                 jogadorGanhou = palavraEncontrada == palavraEscolhida;
@@ -31,6 +31,12 @@ namespace JogoDaForca.ConsoleApp
             } while (jogadorGanhou == false && jogadorEnforcou == false);
         }
 
+        
+        
+        
+        
+        
+        
         static string[] ArmazenamentoDePalavras()
         {
             string[] palavras = {
@@ -154,6 +160,12 @@ namespace JogoDaForca.ConsoleApp
                 Console.WriteLine("----------------------------------------------");
             }
             Console.ReadLine();
+        }
+
+        static string PalavraFoiEncontrada(char[] letrasEncontradas)
+        {
+            string palavraEncontrada = string.Join("", letrasEncontradas);
+            return palavraEncontrada;
         }
     }
 }
