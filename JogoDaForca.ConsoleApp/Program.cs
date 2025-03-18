@@ -13,37 +13,13 @@ namespace JogoDaForca.ConsoleApp
             char[] letrasEncontradas = OcultarPalavra(palavraEscolhida);
             
 
-            int Erros = 0;
+            int erros = 0;
             bool jogadorEnforcou = false;
             bool jogadorAcertou = false;
             do
             {
-
-                string cabecaDoBoneco = Erros >= 1 ? " o " : " ";
-                string bracoEsquerdo = Erros >= 3 ? "/" : " ";
-                string bracoDireito = Erros >= 4 ? "\\" : " ";
-                string troncoCima = Erros >= 2 ? "x" : " ";
-                string troncoBaixo = Erros >= 2 ? " x " : " ";
-                string pernas = Erros >= 5 ? "/ \\" : " ";
-
-                Console.Clear();
-                Console.WriteLine("----------------------------------------------");
-                Console.WriteLine("Jogo da Forca");
-                Console.WriteLine("----------------------------------------------");
-                Console.WriteLine(" ___________        ");
-                Console.WriteLine(" |/        |        ");
-                Console.WriteLine(" |        {0}       ", cabecaDoBoneco);
-                Console.WriteLine(" |        {0}{1}{2} ", bracoEsquerdo, troncoCima, bracoDireito);
-                Console.WriteLine(" |        {0}       ", troncoBaixo);
-                Console.WriteLine(" |        {0}       ", pernas);
-                Console.WriteLine(" |                  ");
-                Console.WriteLine(" |                  ");
-                Console.WriteLine("_|____              ");
-                Console.WriteLine("----------------------------------------------");
-                Console.WriteLine("Erros do jogador: " + Erros);
-                Console.WriteLine("----------------------------------------------");
-                Console.WriteLine("Palavra escolhida: " + String.Join("", letrasEncontradas));
-                Console.WriteLine("----------------------------------------------");
+                MenuPrincipal(erros, letrasEncontradas);
+                
 
                 bool letraFoiEncontrada = false;
                 Console.WriteLine("Digite uma letra: ");
@@ -61,11 +37,11 @@ namespace JogoDaForca.ConsoleApp
                 }
                 if (letraFoiEncontrada == false)
                 {
-                    Erros++;
+                    erros++;
                 }
                 string palavraEncontrada = string.Join("", letrasEncontradas);
                 jogadorAcertou = palavraEncontrada == palavraEscolhida;
-                jogadorEnforcou = Erros > 5;
+                jogadorEnforcou = erros > 5;
                 if (jogadorAcertou)
                 {
                     Console.WriteLine("----------------------------------------------");
@@ -137,6 +113,35 @@ namespace JogoDaForca.ConsoleApp
                 letrasEncontradas[caracter] = '_';
             }
             return letrasEncontradas;
+        }
+
+        static void MenuPrincipal(int erros, char[] letrasEncontradas)
+        {
+            string cabecaDoBoneco = erros >= 1 ? " o " : " ";
+            string bracoEsquerdo = erros >= 3 ? "/" : " ";
+            string bracoDireito = erros >= 4 ? "\\" : " ";
+            string troncoCima = erros >= 2 ? "x" : " ";
+            string troncoBaixo = erros >= 2 ? " x " : " ";
+            string pernas = erros >= 5 ? "/ \\" : " ";
+
+            Console.Clear();
+            Console.WriteLine("----------------------------------------------");
+            Console.WriteLine("Jogo da Forca");
+            Console.WriteLine("----------------------------------------------");
+            Console.WriteLine(" ___________        ");
+            Console.WriteLine(" |/        |        ");
+            Console.WriteLine(" |        {0}       ", cabecaDoBoneco);
+            Console.WriteLine(" |        {0}{1}{2} ", bracoEsquerdo, troncoCima, bracoDireito);
+            Console.WriteLine(" |        {0}       ", troncoBaixo);
+            Console.WriteLine(" |        {0}       ", pernas);
+            Console.WriteLine(" |                  ");
+            Console.WriteLine(" |                  ");
+            Console.WriteLine("_|____              ");
+            Console.WriteLine("----------------------------------------------");
+            Console.WriteLine("Erros do jogador: " + erros);
+            Console.WriteLine("----------------------------------------------");
+            Console.WriteLine("Palavra escolhida: " + String.Join("", letrasEncontradas));
+            Console.WriteLine("----------------------------------------------");
         }
         
     }
