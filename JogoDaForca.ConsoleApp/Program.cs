@@ -7,6 +7,7 @@ namespace JogoDaForca.ConsoleApp
     {
         static void Main(string[] args)
         {
+            
             string[] palavras = ArmazenamentoDePalavras();
 
             string palavraEscolhida = CriarPalavra(palavras);
@@ -15,20 +16,20 @@ namespace JogoDaForca.ConsoleApp
             int erros = 0;
             bool jogadorEnforcou = false;
             bool jogadorGanhou = false;
+            bool continuar = false;
             do
             {
                 MenuPrincipal(erros, letrasEncontradas);
                 erros = ErrouOuNao(palavraEscolhida, letrasEncontradas, erros);
 
                 string palavraEncontrada = PalavraFoiEncontrada(letrasEncontradas);
-                // Condições do loop
-                // _________________________________________
-                jogadorGanhou = palavraEncontrada == palavraEscolhida;
-                jogadorEnforcou = erros > 5;
-                // _________________________________________
+                jogadorGanhou = JogadorGanhou(jogadorGanhou, palavraEncontrada, palavraEscolhida);
+                jogadorEnforcou = JogadorEnforcou(jogadorEnforcou, erros);
                 GanhouOuNao(jogadorGanhou, jogadorEnforcou, palavraEscolhida);
+                //if (jogadorGanhou == true || jogadorEnforcou == true)
+                //continuar = DesejaContinuar(continuar);
 
-            } while (jogadorGanhou == false && jogadorEnforcou == false);
+            } while (jogadorEnforcou == false && jogadorGanhou == false);
         }
 
         
@@ -167,5 +168,35 @@ namespace JogoDaForca.ConsoleApp
             string palavraEncontrada = string.Join("", letrasEncontradas);
             return palavraEncontrada;
         }
+
+        static bool JogadorGanhou(bool jogadorGanhou, string palavraEncontrada, string palavraEscolhida)
+        {
+            jogadorGanhou = palavraEncontrada == palavraEscolhida;
+            return jogadorGanhou;
+        }
+        static bool JogadorEnforcou(bool jogadorEnforcou, int erros)
+        {
+            jogadorEnforcou = erros > 5;
+            return jogadorEnforcou;
+        }
+        /*static bool DesejaContinuar(bool continuar )
+        {
+            Console.WriteLine("Deseja Continuar? (s/n)");
+            string querContinuar = Console.ReadLine()!.ToUpper();
+            if (querContinuar == "S")
+            {
+                continuar = false;  
+            } else if (querContinuar == "N")
+            {
+                Console.WriteLine("Obrigado Pela Presença");
+                continuar = true;
+            } else
+            {
+                Console.WriteLine("Comando Inválido, Retornando");
+                DesejaContinuar(continuar);
+            }
+            return continuar;
+
+        }*/
     }
 }
