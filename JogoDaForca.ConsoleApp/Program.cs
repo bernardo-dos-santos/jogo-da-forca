@@ -3,96 +3,52 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace JogoDaForca.ConsoleApp
 {
+    
+    
+    
+    
     internal class Program
     {
         static void Main(string[] args)
         {
-            
-            string[] palavras = ArmazenamentoDePalavras();
-
-            string palavraEscolhida = CriarPalavra(palavras);
-
-            char[] letrasEncontradas = OcultarPalavra(palavraEscolhida);
-            int erros = 0;
-            bool jogadorEnforcou = false;
-            bool jogadorGanhou = false;
-            bool continuar = false;
-            do
+            bool continuar = true;
+            while (continuar)
             {
-                MenuPrincipal(erros, letrasEncontradas);
-                erros = ErrouOuNao(palavraEscolhida, letrasEncontradas, erros);
+                string[] palavras = LogicaDoJogo.ArmazenamentoDePalavras();
 
-                string palavraEncontrada = PalavraFoiEncontrada(letrasEncontradas);
-                jogadorGanhou = JogadorGanhou(jogadorGanhou, palavraEncontrada, palavraEscolhida);
-                jogadorEnforcou = JogadorEnforcou(jogadorEnforcou, erros);
-                GanhouOuNao(jogadorGanhou, jogadorEnforcou, palavraEscolhida);
-                //if (jogadorGanhou == true || jogadorEnforcou == true)
-                //continuar = DesejaContinuar(continuar);
+                string palavraEscolhida = LogicaDoJogo.CriarPalavra(palavras);
 
-            } while (jogadorEnforcou == false && jogadorGanhou == false);
-        }
+                char[] letrasEncontradas = LogicaDoJogo.OcultarPalavra(palavraEscolhida);
+                int erros = 0;
+                bool jogadorEnforcou = false;
+                bool jogadorGanhou = false;
+                
+                do
+                {
+                    MenuPrincipal(erros, letrasEncontradas);
 
-        
-        
-        
-        
-        
-        
-        static string[] ArmazenamentoDePalavras()
-        {
-            string[] palavras = {
-                "ABACATE",
-                "ABACAXI",
-                "ACEROLA",
-                "ACAI",
-                "ARACA",
-                "ABACATE",
-                "BACABA",
-                "BACURI",
-                "BANANA",
-                "CAJA",
-                "CAJU",
-                "CARAMBOLA",
-                "CUPUACU",
-                "GRAVIOLA",
-                "GOIABA",
-                "JABUTICABA",
-                "JENIPAPO",
-                "MACA",
-                "MANGABA",
-                "MANGA",
-                "MARACUJA",
-                "MURICI",
-                "PEQUI",
-                "PITANGA",
-                "PITAYA",
-                "SAPOTI",
-                "TANGERINA",
-                "UMBU",
-                "UVA",
-                "UVAIA"
-            };
-            return palavras;
-        }
-        static string CriarPalavra(string[] palavras)
-        {
-            Random random = new Random();
+                    erros = LogicaDoJogo.ErrouOuNao(palavraEscolhida, letrasEncontradas, erros);
 
-            int indiceEscolhido = random.Next(palavras.Length);
-            string palavraEscolhida = palavras[indiceEscolhido];
-            return palavraEscolhida;
-        }
+                    string palavraEncontrada = LogicaDoJogo.PalavraFoiEncontrada(letrasEncontradas);
 
-        static char[] OcultarPalavra(string palavraEscolhida)
-        {
-            char[] letrasEncontradas = new char[palavraEscolhida.Length];
+                    jogadorGanhou = LogicaDoJogo.JogadorGanhou(jogadorGanhou, palavraEncontrada, palavraEscolhida);
 
-            for (int caracter = 0; caracter < palavraEscolhida.Length; caracter++)
-            {
-                letrasEncontradas[caracter] = '_';
+                    jogadorEnforcou = LogicaDoJogo.JogadorEnforcou(jogadorEnforcou, erros);
+
+                    GanhouOuNao(jogadorGanhou, jogadorEnforcou, palavraEscolhida);
+
+                } while (jogadorEnforcou == false && jogadorGanhou == false);
+
+                 continuar = DesejaContinuar(continuar);
             }
-            return letrasEncontradas;
         }
+
+        
+               
+        
+        
+
+        
 
         static void MenuPrincipal(int erros, char[] letrasEncontradas)
         {
@@ -123,28 +79,7 @@ namespace JogoDaForca.ConsoleApp
             Console.WriteLine("----------------------------------------------");
         }
 
-        static int ErrouOuNao(string palavraEscolhida, char[] letrasEncontradas, int erros)
-        {
-            bool letraFoiEncontrada = false;
-            Console.WriteLine("Digite uma letra: ");
-            char chute = Console.ReadLine()!.ToUpper()[0];
-
-            for (int contador = 0; contador < palavraEscolhida.Length; contador++)
-            {
-                char letraAtual = palavraEscolhida[contador];
-                if (letraAtual == chute)
-                {
-                    letrasEncontradas[contador] = letraAtual;
-                    letraFoiEncontrada = true;
-                }
-
-            }
-            if (letraFoiEncontrada == false)
-            {
-                erros++;
-            }
-            return erros;
-        }
+        
         static void GanhouOuNao(bool jogadorGanhou, bool jogadorEnforcou, string palavraEscolhida)
         {
             if (jogadorGanhou)
@@ -163,33 +98,19 @@ namespace JogoDaForca.ConsoleApp
             Console.ReadLine();
         }
 
-        static string PalavraFoiEncontrada(char[] letrasEncontradas)
+        static bool DesejaContinuar(bool continuar )
         {
-            string palavraEncontrada = string.Join("", letrasEncontradas);
-            return palavraEncontrada;
-        }
-
-        static bool JogadorGanhou(bool jogadorGanhou, string palavraEncontrada, string palavraEscolhida)
-        {
-            jogadorGanhou = palavraEncontrada == palavraEscolhida;
-            return jogadorGanhou;
-        }
-        static bool JogadorEnforcou(bool jogadorEnforcou, int erros)
-        {
-            jogadorEnforcou = erros > 5;
-            return jogadorEnforcou;
-        }
-        /*static bool DesejaContinuar(bool continuar )
-        {
+            
             Console.WriteLine("Deseja Continuar? (s/n)");
             string querContinuar = Console.ReadLine()!.ToUpper();
             if (querContinuar == "S")
             {
-                continuar = false;  
+                continuar = true;  
             } else if (querContinuar == "N")
             {
                 Console.WriteLine("Obrigado Pela Presença");
-                continuar = true;
+                Console.ReadLine();
+                continuar = false;
             } else
             {
                 Console.WriteLine("Comando Inválido, Retornando");
@@ -197,6 +118,6 @@ namespace JogoDaForca.ConsoleApp
             }
             return continuar;
 
-        }*/
+        }
     }
 }
